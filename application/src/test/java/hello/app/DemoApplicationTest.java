@@ -12,11 +12,11 @@ import hello.service.MyService;
 public class DemoApplicationTest {
 
     @Autowired
-    private __MyService myService;
+    private MyService myService;
 
     @Test
     public void contextLoads() {
-        assertThat(myService).isNotNull();
+        assertThat(myService).isNull();
     }
 
 }
