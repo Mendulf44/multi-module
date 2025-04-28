@@ -12,7 +12,7 @@ import hello.service.MyService;
 public class DemoApplicationTest {
 
     @Autowired
-    private MyService myService;
+    private __MyService myService;
 
     @Test
     public void contextLoads() {
