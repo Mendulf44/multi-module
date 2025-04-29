@@ -60,26 +60,20 @@ pipeline {
         }
             
         stage('Deploiement integration') {
-            when {
-                branch 'master'
-                beforeOptions true
-                beforeInput true
-                beforeAgent true
-                }
-                
             agent any
 
-            input {
-                    message 'Dans quel Data Center, voulez-vous déployer artefact ?'
-                    parameters {
-                        choice choices: ['paris', 'lille', 'lyon'], description: 'Choix du DC', name: 'DC'
-                    }
-            }   
+            input cancel: 'No', message: 'Do you approve this deployment', ok: 'Yes' 
             
+            
+
             steps {
-                echo "Déploiement dans ${DC}"
+                scripts{
+                    def props = readJSON file: 'deployment.json', text: ''
+                    echo props.integrationURL
+                    } 
+                echo "Déploiement dans tous les DCs"
                 unstash 'application_main'
-                sh 'cp application/target/*.jar /home/plb/mywork/deploy/${DC}'
+                sh 'cp application/target/*.jar /home/plb/mywork/deploy/lille'
                 }
         }
 
