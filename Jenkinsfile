@@ -66,11 +66,13 @@ pipeline {
             input {
                 message 'Do you approve this deployment'
                 ok 'Yes' 
-            }   
+            }
+            steps {echo "Continue..."}    
         }
+
         stage('Deploiement Sur Dcs') {
             agent any
-                     
+
             steps {
                 unstash 'application_main'
                 script {
