@@ -74,7 +74,7 @@ pipeline {
                     def integrationURL = props['integrationURL']
                     def datacenters = props['dataCenters']
                     for (datacenter in datacenters) {  
-                    sh "cp application/target/*.jar /home/plb/mywork/deploy/${datacenter}"
+                    sh "cp application/target/*.jar ${integrationURL}/${datacenter}"
                     }
                 }   
                 echo "Déploiement dans tous les DCs"
