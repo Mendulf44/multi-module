@@ -38,18 +38,20 @@ pipeline {
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
-            steps {
+                    agent any    
+                    steps {
 
-                // Run Maven on a Unix agent.
-                sh 'mvn -DskipTests verify'
-                }
+                    // Run Maven on a Unix agent.
+                    sh 'mvn -DskipTests verify'
+                    }
                     
                 }
                  stage('Analyse Sonar') {
-            steps {
-                // Run Maven on a Unix agent.
-                sh 'mvn -Dsonar.token=${SONAR_TOKEN} clean integration-test sonar:sonar'
-                }
+                    agent any
+                    steps {
+                        // Run Maven on a Unix agent.
+                        sh 'mvn -Dsonar.token=${SONAR_TOKEN} clean integration-test sonar:sonar'
+                    }
                     
                 }
             }
@@ -60,7 +62,17 @@ pipeline {
 
             steps {
                 echo "Déploiement intégration"
-                
+                input {
+                    message 'Dans quel Data Center, voulez-vous déployer l\'artefact?'
+                    parameters {
+                        choice choices: ['Paris'], description: 'DC Paris', name: 'DC'
+                        choice choices: ['Lille'], description: 'DC Lille', name: 'DC'
+                        choice choices: ['Lyon'], description: 'DC Lyon', name: 'DC'
+                    }
+                }   
+            }
+            steps {
+                echo "Hello, ${DC}, nice to meet you."
             }
         }
 
