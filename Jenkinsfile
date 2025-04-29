@@ -61,13 +61,16 @@ pipeline {
         }
  */           
         stage('Deploiement integration') {
-            agent any
+            agent none
 
             input {
                 message 'Do you approve this deployment'
                 ok 'Yes' 
             }   
-          
+        }
+        stage('Deploiement Sur Dcs') {
+            agent any
+                     
             steps {
                 unstash 'application_main'
                 script {
