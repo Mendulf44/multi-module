@@ -8,6 +8,7 @@ pipeline {
 
     environment {
         SONAR_TOKEN=credentials('SONAR_TOKEN_ID')
+
     }
 
     stages {
@@ -47,7 +48,7 @@ pipeline {
                  stage('Analyse Sonar') {
             steps {
                 // Run Maven on a Unix agent.
-                sh "mvn -Dsonar.token=${SONAR_TOKEN} clean inetgration-test sonar:sonar"
+                sh 'mvn -Dsonar.token=${SONAR_TOKEN} clean inetgration-test sonar:sonar'
                 }
                     
                 }
