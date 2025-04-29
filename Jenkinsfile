@@ -1,3 +1,6 @@
+def integrationURL = ''props['integrationURL']
+def datacenters = []
+
 pipeline {
    agent any 
 
