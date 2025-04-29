@@ -70,7 +70,7 @@ pipeline {
             steps {
                 echo "Déploiement dans ${DC}"
                 unstash 'application_main'
-                sh 'cp *.jar /home/plb/mywork/deploy/${DC}'
+                sh 'cp application/target/*.jar /home/plb/mywork/deploy/${DC}'
                 }
         }
 
