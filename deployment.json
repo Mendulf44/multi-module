@@ -1,4 +1,4 @@
 {
-    "integrationURL": '/home/dthibau/Formations/Jenkins/MyWork/Serveurs',
+    "integrationURL": "'/home/plb/mywork/deploy/',
     "dataCenters": ['Nancy','Strasbourg']
 }
