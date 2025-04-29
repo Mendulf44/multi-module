@@ -59,15 +59,29 @@ pipeline {
             }
             
         }
- */           
+ */   
+        stage('Reading Configuration') {
+            agent any
+
+            steps {
+                
+                echo "Continue..."
+                }    
+        }        
         stage('Deploiement integration') {
             agent none
-
-            input {
-                message 'Do you approve this deployment'
-                ok 'Yes' 
-            }
-            steps {echo "Continue..."}    
+  
+            steps {
+                script {
+                    def props = readJSON file: 'deployment.json'
+                    def integrationURL = props['integrationURL']
+                    def datacenters = props['dataCenters']
+                    for (datacenter in datacenters) {  
+                    echo "${datacenter}"
+                    }
+                }  
+                echo "Continue..."
+                }    
         }
 
         stage('Deploiement Sur Dcs') {
@@ -76,9 +90,6 @@ pipeline {
             steps {
                 unstash 'application_main'
                 script {
-                    def props = readJSON file: 'deployment.json'
-                    def integrationURL = props['integrationURL']
-                    def datacenters = props['dataCenters']
                     for (datacenter in datacenters) {  
                     sh "cp application/target/*.jar ${integrationURL}/${datacenter}.jar"
                     }
