@@ -6,6 +6,10 @@ pipeline {
     jdk 'JDK21'
     }
 
+    environment {
+        SONAR_TOKEN=credentials('SONAR_TOKEN_ID')
+    }
+
     stages {
         stage('Build and Test') {
             steps {
@@ -33,15 +37,18 @@ pipeline {
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
-                    steps {
-                        echo 'Tests de Vulnérabilités OWASP'
-                    }
+            steps {
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                }
                     
                 }
                  stage('Analyse Sonar') {
-                     steps {
-                        echo 'Analyse sonar'
-                     }
+            steps {
+                // Run Maven on a Unix agent.
+                sh "mvn -Dsonar.token=${SONAR_TOKEN} clean inetgration-test sonar:sonar"
+                }
                     
                 }
             }
