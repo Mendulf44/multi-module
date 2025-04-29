@@ -23,7 +23,7 @@ pipeline {
                     archiveArtifacts 'application/**/*.jar'
                 }
                 failure{
-                    echo 'test'
+                    mail bcc: '', body: 'Test 1 - 2.2.2', cc: 'mael.marchand@protonmail.com', from: '', replyTo: '', subject: 'Test 1 - 2.2.2', to: 'mael.marchand@bnpparibas.com'
                 } 
             }
              
