@@ -60,6 +60,15 @@ pipeline {
         }
             
         stage('Deploiement integration') {
+            when {
+                branch 'master'
+                beforeOptions true
+                beforeInput true
+                beforeAgent true
+                }
+                
+            agent any
+
             input {
                     message 'Dans quel Data Center, voulez-vous déployer artefact ?'
                     parameters {
