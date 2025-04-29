@@ -62,18 +62,24 @@ pipeline {
         stage('Deploiement integration') {
             agent any
 
-            input cancel: 'No', message: 'Do you approve this deployment', ok: 'Yes' 
-            
-            
-
+            input {
+                message 'Do you approve this deployment'
+                ok 'Yes' 
+            }   
+          
             steps {
-                scripts{
-                    def props = readJSON file: 'deployment.json', text: ''
-                    echo props.integrationURL
-                    } 
-                echo "Déploiement dans tous les DCs"
                 unstash 'application_main'
-                sh 'cp application/target/*.jar /home/plb/mywork/deploy/lille'
+                script {
+                    def props = readJSON file: 'deployment.json'
+                    def integrationURL = props['integrationURL']
+                    def datacenters = props['dataCenters']
+                    for (datacenter in datacenters) {  
+                    sh "cp application/target/*.jar /home/plb/mywork/deploy/${datacenter}"
+                    }
+                }   
+                echo "Déploiement dans tous les DCs"
+
+
                 }
         }
 
