@@ -28,6 +28,7 @@ pipeline {
                 } 
                 success {
                     archiveArtifacts 'application/**/*.jar'
+                    stash includes: 'application/target/*.jar', name: 'application_main'
                 }
                 failure{
                     mail bcc: '', body: 'Test 1 - 2.2.2', cc: 'mael.marchand@protonmail.com', from: '', replyTo: '', subject: 'Test 1 - 2.2.2', to: 'mael.marchand@bnpparibas.com'
@@ -62,13 +63,15 @@ pipeline {
             input {
                     message 'Dans quel Data Center, voulez-vous déployer artefact ?'
                     parameters {
-                        choice choices: ['Paris', 'Lille', 'Lyon'], description: 'Choix du DC', name: 'DC'
+                        choice choices: ['paris', 'lille', 'lyon'], description: 'Choix du DC', name: 'DC'
                     }
             }   
             
             steps {
-                echo "Hello, ${DC}, nice to meet you."
-            }
+                echo "Déploiement dans ${DC}"
+                unstash 'application_main'
+                sh 'cp *.jar /home/plb/mywork/deploy/${DC}'
+                }
         }
 
      }
