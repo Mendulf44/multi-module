@@ -58,11 +58,7 @@ pipeline {
             
         }
             
-        stage('Déploiement intégration') {
-
-            steps {
-                echo "Déploiement intégration"
-            } 
+        stage('Deploiement integration') {
             input {
                     message 'Dans quel Data Center, voulez-vous déployer artefact ?'
                     parameters {
