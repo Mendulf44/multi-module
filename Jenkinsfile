@@ -64,14 +64,6 @@ pipeline {
             agent any
 
             steps {
-                
-                echo "Continue..."
-                }    
-        }        
-        stage('Deploiement integration') {
-            agent none
-  
-            steps {
                 script {
                     def props = readJSON file: 'deployment.json'
                     def integrationURL = props['integrationURL']
@@ -79,8 +71,19 @@ pipeline {
                     for (datacenter in datacenters) {  
                     echo "${datacenter}"
                     }
-                }  
-                echo "Continue..."
+                }    
+            }
+        }
+ 
+        stage('Deploiement integration') {
+            agent none
+            
+            input { message "Voulez-vous deployer"
+                ok "Yes"
+                }
+
+            steps {
+               echo "Continue..."
                 }    
         }
 
