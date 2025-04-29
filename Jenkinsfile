@@ -11,7 +11,7 @@ pipeline {
             steps {
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean1 package"
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
             }
 
 
