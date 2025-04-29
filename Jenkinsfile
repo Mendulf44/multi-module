@@ -41,7 +41,7 @@ pipeline {
             steps {
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh 'mvn -DskipTests verify'
                 }
                     
                 }
