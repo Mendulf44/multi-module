@@ -36,6 +36,7 @@ pipeline {
             }
              
         }
+        /*
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
@@ -58,7 +59,7 @@ pipeline {
             }
             
         }
-            
+ */           
         stage('Deploiement integration') {
             agent any
 

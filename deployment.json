@@ -1,4 +1,4 @@
 {
-    "integrationURL": "'/home/plb/mywork/deploy',
+    "integrationURL": '/home/plb/mywork/deploy',
     "dataCenters": ['Nancy','Strasbourg']
 }
