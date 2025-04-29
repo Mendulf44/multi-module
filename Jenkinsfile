@@ -71,7 +71,7 @@ pipeline {
                         choice choices: ['Lyon'], description: 'DC Lyon', name: 'DC'
                     }
             }   
-            }
+            
             steps {
                 echo "Hello, ${DC}, nice to meet you."
             }
