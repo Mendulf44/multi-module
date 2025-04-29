@@ -69,8 +69,8 @@ pipeline {
             steps {
                 script {
                     def props = readJSON file: 'deployment.json'
-                    def integrationURL = props['integrationURL']
-                    def datacenters = props['dataCenters']
+                    integrationURL = props['integrationURL']
+                    datacenters = props['dataCenters']
                     for (datacenter in datacenters) {  
                     echo "${datacenter}"
                     }
