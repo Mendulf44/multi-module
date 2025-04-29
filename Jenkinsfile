@@ -63,7 +63,7 @@ pipeline {
             steps {
                 echo "Déploiement intégration"
                 input {
-                    message 'Dans quel Data Center, voulez-vous déployer l\'artefact?'
+                    message 'Dans quel Data Center, voulez-vous déployer artefact ?'
                     parameters {
                         choice choices: ['Paris'], description: 'DC Paris', name: 'DC'
                         choice choices: ['Lille'], description: 'DC Lille', name: 'DC'
