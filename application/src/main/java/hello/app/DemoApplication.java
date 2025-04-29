@@ -25,7 +25,7 @@ public class DemoApplication {
     }
     
     @PostMapping("/")
-    cpublic String setMessage(@RequestParam String msg) {
+    public String setMessage(@RequestParam String msg) {
         return myService.message();
     }
 
