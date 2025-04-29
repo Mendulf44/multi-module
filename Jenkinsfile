@@ -62,9 +62,7 @@ pipeline {
             input {
                     message 'Dans quel Data Center, voulez-vous déployer artefact ?'
                     parameters {
-                        choice choices: ['Paris'], description: 'DC Paris', name: 'DC'
-                        choice choices: ['Lille'], description: 'DC Lille', name: 'DC'
-                        choice choices: ['Lyon'], description: 'DC Lyon', name: 'DC'
+                        choice choices: ['Paris, Lille, Lyon'], description: 'Choix du DC', name: 'DC'
                     }
             }   
             
