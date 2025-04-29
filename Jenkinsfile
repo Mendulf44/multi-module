@@ -1,4 +1,4 @@
-def integrationURL = ''props['integrationURL']
+def integrationURL = ''
 def datacenters = []
 
 pipeline {
