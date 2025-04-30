@@ -1,4 +1,4 @@
-@Library('global-library')_
+@Library('global-library') _
 
 def integrationURL = ''
 def datacenters = []
@@ -47,7 +47,7 @@ pipeline {
     jdk 'JDK21'
     }
 */
-    
+
     environment {
         SONAR_TOKEN=credentials('SONAR_TOKEN_ID')
 
@@ -86,7 +86,19 @@ pipeline {
             }
              
         }
- /*       
+        stage('Analyse qualité & vulns'){
+            agent any
+            steps{
+                unstash 'application_main'
+                scripts{
+                    def dockerImage = docker.build('mendulf44/multi-module', '.')
+                    docker.WithRegistry('https://registry.hub.docker.com','docker_account'){
+                        dockerImage.push 'lastest'
+                    } 
+                } 
+            } 
+        } 
+       /*
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
