@@ -90,7 +90,7 @@ pipeline {
             agent any
             steps{
                 unstash 'application_main'
-                script{
+                script {
                     def dockerImage = docker.build('mendulf44/multi-module', '.')
                     docker.WithRegistry('https://registry.hub.docker.com','docker_account'){
                         dockerImage.push 'latest'
