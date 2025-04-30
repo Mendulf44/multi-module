@@ -1,6 +1,41 @@
 def integrationURL = ''
 def datacenters = []
 
+def checkSonarQualityGate(){
+    // Get properties from report file to call SonarQube 
+    def sonarReportProps = readProperties  file: 'target/sonar/report-task.txt'
+    def sonarServerUrl = sonarReportProps['serverUrl']
+    def ceTaskUrl = sonarReportProps['ceTaskUrl']
+    def ceTask
+
+    // Get task informations to get the status
+    timeout(time: 4, unit: 'MINUTES') {
+        waitUntil(initialRecurrencePeriod: 1000)  {
+            withCredentials ([string(credentialsId: 'SONAR_TOKEN', variable : 'token')]) {
+                def response = sh(script: "curl -u ${token}: ${ceTaskUrl}", returnStdout: true).trim()
+                ceTask = readJSON text: response
+            }
+
+            echo ceTask.toString()
+              return "SUCCESS".equals(ceTask['task']['status'])
+        }
+    }
+
+    // Get project analysis informations to check the status
+    def ceTaskAnalysisId = ceTask['task']['analysisId']
+    def qualitygate
+
+    withCredentials ([string(credentialsId: 'SONAR_TOKEN', variable : 'token')]) {
+        def response = sh(script: "curl -u ${token}: ${sonarServerUrl}/api/qualitygates/project_status?analysisId=${ceTaskAnalysisId}", returnStdout: true).trim()
+        qualitygate =  readJSON text: response
+    }
+
+    echo qualitygate.toString()
+    if ("ERROR".equals(qualitygate['projectStatus']['status'])) {
+        error "Quality Gate failure"
+    }
+}
+
 pipeline {
    agent any 
 
@@ -39,7 +74,7 @@ pipeline {
             }
              
         }
-        /*
+        
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
@@ -62,7 +97,7 @@ pipeline {
             }
             
         }
- */   
+   
         stage('Reading Configuration') {
             agent any
 
@@ -79,14 +114,21 @@ pipeline {
         }
  
         stage('Deploiement integration') {
-            agent none
+            agent any
             
+            when {
+                 checkSonarQualityGate=true
+                                
+            }
+
             input { message "Voulez-vous deployer"
                 ok "Yes"
                 }
 
             steps {
-               echo "Continue..."
+               script{
+                if checkSonarQualityGate echo "Continue" else 
+               }   
                 }    
         }
 
@@ -96,6 +138,7 @@ pipeline {
             steps {
                 unstash 'application_main'
                 script {
+                    if 
                     for (datacenter in datacenters) {  
                     sh "cp application/target/*.jar ${integrationURL}/${datacenter}.jar"
                     }
