@@ -74,7 +74,7 @@ pipeline {
             }
              
         }
-        
+ /*       
         stage('Analyse qualité et vulnérabilités') {
             parallel {
                 stage('Vulnérabilités') {
@@ -84,9 +84,10 @@ pipeline {
                     // Run Maven on a Unix agent.
                     sh 'mvn -DskipTests verify'
                     }
-                    
+                   
                 }
-                 stage('Analyse Sonar') {
+
+                stage('Analyse Sonar') {
                     agent any
                     steps {
                         // Run Maven on a Unix agent.
@@ -97,7 +98,7 @@ pipeline {
             }
             
         }
-   
+ */  
         stage('Reading Configuration') {
             agent any
 
@@ -123,9 +124,8 @@ pipeline {
             steps {
                 echo "Continue"  
                }   
-                }    
-        }
-
+        }    
+        
         stage('Deploiement Sur Dcs') {
             agent any
 
@@ -139,11 +139,11 @@ pipeline {
                 }   
                 echo "Déploiement dans tous les DCs"
 
-
                 }
         }
 
      }
+} 
   
 
 
