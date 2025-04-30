@@ -41,11 +41,13 @@ def checkSonarQualityGate(){
 pipeline {
    agent any 
 
+/*
     tools {
     maven 'maven3'
     jdk 'JDK21'
     }
-
+*/
+    
     environment {
         SONAR_TOKEN=credentials('SONAR_TOKEN_ID')
 
