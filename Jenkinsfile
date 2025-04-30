@@ -57,7 +57,7 @@ pipeline {
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
-                create_targz sourceDir:application/target extensions:[jar,xml] outputDir:/home/plb/mywork/backup 
+                create_targz sourceDir:application/target extensions:jar,xml outputDir:/home/plb/mywork/backup 
             }
 
 
