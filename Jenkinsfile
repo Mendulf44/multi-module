@@ -53,11 +53,18 @@ pipeline {
 
     stages {
         stage('Build and Test') {
+            agent {
+                docker {
+                    image 'openjdk:17-alpine'
+                    args '-v $HOME/.m2:/root/.m2'
+                   }
+            }
+
             steps {
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
-                create_targz sourceDir:'application/target' extensions:['jar','xml'] outputDir:'/home/plb/mywork/backup' 
+                sh "./mvnw -Dmaven.test.failure.ignore=true clean package"
+                /*create_targz sourceDir:'application/target' extensions:['jar','xml'] outputDir:'/home/plb/mywork/backup' */ 
             }
 
 
