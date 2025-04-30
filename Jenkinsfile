@@ -116,11 +116,6 @@ pipeline {
         stage('Deploiement integration') {
             agent any
             
-            when {
-                 checkSonarQualityGate=true
-                                
-            }
-
             input { message "Voulez-vous deployer"
                 ok "Yes"
                 }
