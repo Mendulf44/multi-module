@@ -90,14 +90,15 @@ pipeline {
             agent any
             steps{
                 unstash 'application_main'
-                scripts{
+                script{
                     def dockerImage = docker.build('mendulf44/multi-module', '.')
                     docker.WithRegistry('https://registry.hub.docker.com','docker_account'){
-                        dockerImage.push 'lastest'
+                        dockerImage.push 'latest'
                     } 
                 } 
             } 
         } 
+
        /*
         stage('Analyse qualité et vulnérabilités') {
             parallel {
