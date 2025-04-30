@@ -137,7 +137,7 @@ pipeline {
             steps {
                 unstash 'application_main'
                 script {
-                    if 
+                     
                     for (datacenter in datacenters) {  
                     sh "cp application/target/*.jar ${integrationURL}/${datacenter}.jar"
                     }
