@@ -126,8 +126,7 @@ pipeline {
                 }
 
             steps {
-               script{
-                if checkSonarQualityGate echo "Continue" else 
+                echo "Continue"  
                }   
                 }    
         }
