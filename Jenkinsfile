@@ -1,5 +1,3 @@
-@Library('global-library') _
-
 def integrationURL = ''
 def datacenters = []
 
